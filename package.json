@@ -1,0 +1,28 @@
+{
+  "name": "eploy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib",
+  "dependencies": {
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^14.14.2",
+    "@types/shelljs": "^0.8.8",
+    "@types/ws": "^7.2.7",
+    "minimist": "^1.2.5",
+    "shelljs": "^0.8.4",
+    "ws": "^7.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  },
+  "bin": {
+    "eploy": "bin/eploy"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p ."
+  },
+  "author": "Mariselvam",
+  "license": "ISC"
+}
