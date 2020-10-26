@@ -10,8 +10,8 @@ import shelljs from './utils/shell'
 
 export const init = async () => {
     integrateCmds();
-    // await WebSocketServer.onInit();
-    // WebSocketClient.onInit()
+    await WebSocketServer.onInit();
+    WebSocketClient.onInit()
     // WebSocketClient.onReceive((msg: any) => {
     //     console.log('from server', msg);
     // })

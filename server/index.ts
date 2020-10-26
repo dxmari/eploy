@@ -1,8 +1,26 @@
 'use strict';
 
 import ws, { Server as WebSocketServer } from 'ws'
+import http from 'http'
+import express from 'express'
 
-const wss = new WebSocketServer({ port: 10001 });
+const app = express();
+
+const port: number = 8000;
+const host = 'localhost'; //"0.0.0.0"
+
+app.get('/',(req,res) =>{
+    res.json([{
+        id : 1
+    }]);
+})
+const httpServer = http.createServer(app);
+
+httpServer.listen(port, function () {
+    console.log("Server: Listening on " + host + ':' + port);
+});
+
+const wss = new WebSocketServer({ server: httpServer });
 
 type ExtWebSocket = ws & {
     isAlive: boolean
@@ -11,7 +29,7 @@ type ExtWebSocket = ws & {
 
 class WebSocketServerSide {
     socket: any;
-    async onInit(){
+    async onInit() {
         this.socket = await this.connect();
     }
 
