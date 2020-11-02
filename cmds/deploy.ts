@@ -8,14 +8,18 @@ export default async (args: any) => {
     // await WebSocketServer.onInit()
     let filePath = path.resolve('./eploy.config.js')
     let config :EployConfig = require(filePath);
-
-    await WebSocketClient.onInit(config.cloud_config.host);
-    WebSocketClient.onReceive();
+    try {
+        await WebSocketClient.onInit(config.cloud_config.host);
+        WebSocketClient.onReceive((message:any) =>{
+            console.log(message);
+        });
     
-    // WebSocketServer.sendParamsToClient(await shelljs('cd /Users/mariselvam/Documents/Official/React/cm-v4-testing && gatsby develop'))
-
-    WebSocketClient.sendParamsToServer(JSON.stringify({
-        type : 'deploy',
-        config : config
-    }))
+        WebSocketClient.sendParamsToServer(JSON.stringify({
+            type : 'deploy',
+            config : config
+        }))
+    } catch (error) {
+        console.error('\ncould not connect to a host ' + config.cloud_config.host + '\n')
+        process.exit();
+    }
 }
