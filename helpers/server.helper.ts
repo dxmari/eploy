@@ -1,5 +1,6 @@
 import { ServerMessage, EployConfig, CloudConfig, ExtWebSocket } from './../interfaces'
-import shellJS from './../utils/shell'
+// import shellJS from './../utils/shell'
+import execShell from './../utils/exec'
 
 class ServerHelper {
 
@@ -17,12 +18,13 @@ class ServerHelper {
         
         ws.send("\n1)Redirect to " + cloudConfig.application_path + "\n\n2)Run pre launch scripts " + cloudConfig.pre_launch_script + "\n\n");
         ws.send('start_spinner');
-        var logs = await shellJS(`
+        var logs = await execShell(`
                 cd ${cloudConfig.application_path} && ${cloudConfig.pre_launch_script}
         `);
         ws.send(logs)
-        console.log('\nDeployed Success...\n')
+        // console.log('\nDeployed Success...\n')
         ws.send('stop_spinner');
+        ws.send('\nDeployed Success...\n');
         setTimeout(() =>{
             process.exit();
         },2000);

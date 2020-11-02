@@ -9,7 +9,6 @@ const port: number = 8080;
 
 const wss = new WebSocketServer({ noServer: true, port: port });
 
-
 class WebSocketServerSide {
     socket: any;
     async onInit() {
