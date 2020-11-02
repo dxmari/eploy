@@ -15,7 +15,7 @@ class ServerHelper {
 
     async navigateToAppPathAndLaunchScript(cloudConfig: CloudConfig, ws: ExtWebSocket) {
         
-        ws.send("\n1)Redirect to '${cloudConfig.application_path}'\n\n2)Run pre launch scripts '${cloudConfig.pre_launch_script}'\n\n");
+        ws.send("\n1)Redirect to " + cloudConfig.application_path + "\n\n2)Run pre launch scripts " + cloudConfig.pre_launch_script + "\n\n");
         ws.send('start_spinner');
         var logs = await shellJS(`
                 cd ${cloudConfig.application_path} && ${cloudConfig.pre_launch_script}
@@ -26,9 +26,6 @@ class ServerHelper {
         setTimeout(() =>{
             process.exit();
         },2000);
-        
-        // setTimeout(async () =>{
-        // },5000);
     }
 
 }
