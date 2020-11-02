@@ -49,6 +49,8 @@ class WebSocketClient {
         start_spinner('Running the scripts...\n')
       }else if(message === 'stop_spinner'){
         stop_spinner();
+      }else if(message === 'exit'){
+        process.exit();
       }else{
         if(cb){
           return cb(message)

@@ -22,12 +22,9 @@ class ServerHelper {
                 cd ${cloudConfig.application_path} && ${cloudConfig.pre_launch_script}
         `);
         ws.send(logs)
-        // console.log('\nDeployed Success...\n')
-        ws.send('stop_spinner');
-        ws.send('\nDeployed Success...\n');
-        setTimeout(() =>{
-            process.exit();
-        },2000);
+        ws.send('stop_spinner')
+        ws.send('\nDeployed Success...\n')
+        ws.send('exit')
     }
 
 }
