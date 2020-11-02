@@ -1,30 +1,13 @@
 'use strict';
 
 import ws, { Server as WebSocketServer } from 'ws'
-import http from 'http'
-import express from 'express'
+import ServerHelper from './../helpers/server.helper'
+import { ExtWebSocket } from './../interfaces'
+import { isJson } from './../utils/common'
 
-const app = express();
+const port: number = 8080;
 
-const port: number = 8000;
-const host = 'localhost'; //"0.0.0.0"
-
-app.get('/',(req,res) =>{
-    res.json([{
-        id : 1
-    }]);
-})
-const httpServer = http.createServer(app);
-
-httpServer.listen(port, function () {
-    console.log("Server: Listening on " + host + ':' + port);
-});
-
-const wss = new WebSocketServer({ server: httpServer });
-
-type ExtWebSocket = ws & {
-    isAlive: boolean
-}
+const wss = new WebSocketServer({ noServer: true, port: port });
 
 
 class WebSocketServerSide {
@@ -44,9 +27,14 @@ class WebSocketServerSide {
                     console.log('pong', args);
                 })
 
-                ws.on('message', (message: any) => {
-                    console.log(`received: ${message}`);
-                    ws.send(`Hello, you sent -> ${message}`);
+                ws.on('message', async (message: any) => {
+                    // console.log(`received: ${message}`);
+                    // ws.send(`Hello, you sent -> (${await shelljs(message)})`);
+                    if (isJson(message)) {
+                        ServerHelper.handleMessage(isJson(message), ws);
+                    } else {
+                        ServerHelper.handleMessage(message, ws);
+                    }
                 });
 
                 ws.on('end', () => {
@@ -62,7 +50,5 @@ class WebSocketServerSide {
         this.socket.send(params);
     }
 }
-
-
 
 export default new WebSocketServerSide();

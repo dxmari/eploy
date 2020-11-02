@@ -7,16 +7,7 @@ import WebSocketServer from './server/index'
 import WebSocketClient from './client/index'
 
 import shelljs from './utils/shell'
-
-export const init = async () => {
-    integrateCmds();
-    await WebSocketServer.onInit();
-    WebSocketClient.onInit()
-    // WebSocketClient.onReceive((msg: any) => {
-    //     console.log('from server', msg);
-    // })
-    // WebSocketServer.sendParamsToClient(await shelljs('git status'));
-}
+import ManipulateJson from './utils/manipulate-json'
 
 const integrateCmds = () => {
     const args = minimist(process.argv.slice(2))
@@ -49,3 +40,13 @@ const integrateCmds = () => {
             break
     }
 }
+
+export const init = async () => {
+    integrateCmds();
+    // await WebSocketServer.onInit();
+    // await WebSocketClient.onInit();
+    // WebSocketClient.onReceive((msg: any) => {
+    //     console.log('from server: ', msg);
+    // })
+    // WebSocketClient.sendParamsToServer('cd /root/cm-v4-testing/ && gatsby build');
+} 

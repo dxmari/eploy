@@ -1,7 +1,4 @@
-import ws from 'ws';
-declare type ExtWebSocket = ws & {
-    isAlive: boolean;
-};
+import { ExtWebSocket } from './../interfaces';
 declare class WebSocketServerSide {
     socket: any;
     onInit(): Promise<void>;
