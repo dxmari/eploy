@@ -1,13 +1,12 @@
 import minimist from 'minimist'
 
 import error from './utils/error'
-import { deploy, version, help } from './cmds'
+import { deploy, version, help, start } from './cmds'
 
 import WebSocketServer from './server/index'
 import WebSocketClient from './client/index'
 
 import shelljs from './utils/shell'
-import ManipulateJson from './utils/manipulate-json'
 
 const integrateCmds = () => {
     const args = minimist(process.argv.slice(2))
@@ -35,6 +34,10 @@ const integrateCmds = () => {
             deploy(args)
             break
 
+        case 'start':
+            start()
+            break
+            
         default:
             error(`"${cmd}" is not a valid command!`, true)
             break
