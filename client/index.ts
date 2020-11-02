@@ -4,18 +4,20 @@ import WebSocket from 'ws'
 import {start_spinner, stop_spinner} from './../utils/spinner'
 
 class WebSocketClient {
-  ws: WebSocket;
-  constructor(domain: string = 'localhost:8080') {
-    this.ws = new WebSocket(`ws://${domain}`)
+  ws: WebSocket|any;
+  constructor() {
+    this.ws = '';
   }
-  onInit() {
+  onInit(domain: string = 'localhost:8080') {
     return new Promise((resolve, reject) => {
-      this.ws.onopen = function (ev) {
+      this.ws = new WebSocket(`ws://${domain}`)
+      
+      this.ws.onopen = function (ev:any) {
         console.log('\nPreparing Server deployment...\n');
         resolve(ev);
       }
 
-      this.ws.onclose = function (ev) {
+      this.ws.onclose = function (ev:any) {
         console.log("Connection is closed...");
         reject(ev);
       }
@@ -23,7 +25,7 @@ class WebSocketClient {
   }
 
   onError(cb: any) {
-    this.ws.onerror = function (err) {
+    this.ws.onerror = function (err:any) {
       console.log('err: ', err);
       return cb(err)
     }
@@ -34,7 +36,7 @@ class WebSocketClient {
   }
 
   onReceive(cb?: any) {
-    this.ws.onmessage =  (event) =>{
+    this.ws.onmessage =  (event :any) =>{
       var message = event.data;
       if(message === 'start_spinner'){
         start_spinner('Running the scripts...\n')

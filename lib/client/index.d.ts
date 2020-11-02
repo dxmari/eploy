@@ -1,8 +1,8 @@
 import WebSocket from 'ws';
 declare class WebSocketClient {
-    ws: WebSocket;
-    constructor(domain?: string);
-    onInit(): Promise<unknown>;
+    ws: WebSocket | any;
+    constructor();
+    onInit(domain?: string): Promise<unknown>;
     onError(cb: any): void;
     sendParamsToServer(message: any): void;
     onReceive(cb?: any): void;
