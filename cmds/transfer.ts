@@ -5,7 +5,6 @@ import WebSocketClient from './../client/index'
 
 export default async (args: any) => {
     if (args._.length === 1) {
-        console.log('run')
         let filePath = path.resolve('./eploy.config.js')
         let config: EployConfig = require(filePath);
 
@@ -15,7 +14,7 @@ export default async (args: any) => {
         console.log('\n\Folder zipping completed..')
 
         await shellJS(`scp -rp /tmp/${source_path.split('/').pop()}.zip ${config.transfer_config?.user}@${config.transfer_config?.host}:${dest_path}`);
-        console.log('\n\nThe zip file was transfered to a server..');
+        console.log('\nThe zip file was transfered to a server..\n');
 
         await WebSocketClient.onInit(config.transfer_config?.host);
         WebSocketClient.sendParamsToServer(JSON.stringify({
@@ -24,7 +23,7 @@ export default async (args: any) => {
         }));
         WebSocketClient.onReceive((message: any) => {
             if (message === 'unzip_complete'){
-                console.log('Folder unzipping was completed..');
+                console.log('Folder unzipping was completed..\n');
             }
         })
 
