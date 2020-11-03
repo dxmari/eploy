@@ -25,8 +25,6 @@ export default async (args: any) => {
         WebSocketClient.onReceive((message: any) => {
             if (message === 'unzip_complete'){
                 console.log('Folder unzipping was completed..');
-            }else {
-                console.log('Folder unzipping error due to:', message);
             }
         })
 

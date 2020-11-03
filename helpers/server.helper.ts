@@ -30,7 +30,8 @@ class ServerHelper {
     }
 
     async runFilesExtract(ws: ExtWebSocket, transferConfig?: TransferConfig) {
-        var logs = await execShell(`cd ${transferConfig?.destination_path} && tar -xvf ${transferConfig?.source_path.split('/').pop()}.zip`)
+        var filename = transferConfig?.source_path.split('/').pop() + '.zip'
+        var logs = await execShell(`cd ${transferConfig?.destination_path} && tar -xvf ${filename} && rm ${filename}`)
         ws.send(logs);
         ws.send('unzip_complete')
         ws.send('exit')
