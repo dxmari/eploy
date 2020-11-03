@@ -1,12 +1,7 @@
 import minimist from 'minimist'
 
 import error from './utils/error'
-import { deploy, version, help, start } from './cmds'
-
-import WebSocketServer from './server/index'
-import WebSocketClient from './client/index'
-
-import shelljs from './utils/shell'
+import { deploy, version, help, start, transfer } from './cmds'
 
 const integrateCmds = () => {
     const args = minimist(process.argv.slice(2))
@@ -37,7 +32,11 @@ const integrateCmds = () => {
         case 'start':
             start()
             break
-            
+
+        case 'transfer':
+            transfer(args)
+            break
+
         default:
             error(`"${cmd}" is not a valid command!`, true)
             break
@@ -46,10 +45,4 @@ const integrateCmds = () => {
 
 export const init = async () => {
     integrateCmds();
-    // await WebSocketServer.onInit();
-    // await WebSocketClient.onInit();
-    // WebSocketClient.onReceive((msg: any) => {
-    //     console.log('from server: ', msg);
-    // })
-    // WebSocketClient.sendParamsToServer('cd /root/cm-v4-testing/ && gatsby build');
 } 

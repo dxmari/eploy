@@ -5,6 +5,13 @@ export interface AppsConfig {
     main?: string
 }
 
+export interface TransferConfig {
+    host: string,
+    user : string,
+    source_path : string,
+    destination_path : string
+}
+
 export interface CloudConfig {
     host: string,
     repo: string,
@@ -15,7 +22,8 @@ export interface CloudConfig {
 
 export interface EployConfig {
     apps: Array<AppsConfig>
-    cloud_config: CloudConfig
+    cloud_config: CloudConfig,
+    transfer_config? : TransferConfig
 }
 
 export interface ServerMessage {
