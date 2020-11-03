@@ -1,5 +1,4 @@
 import { ServerMessage, EployConfig, CloudConfig, ExtWebSocket, TransferConfig } from './../interfaces'
-// import shellJS from './../utils/shell'
 import execShell from './../utils/exec'
 
 class ServerHelper {
@@ -30,8 +29,8 @@ class ServerHelper {
     }
 
     async runFilesExtract(ws: ExtWebSocket, transferConfig?: TransferConfig) {
-        var filename = transferConfig?.source_path.split('/').pop() + '.zip'
-        var logs = await execShell(`cd ${transferConfig?.destination_path} && tar -xvf ${filename} && rm ${filename}`)
+        var filename = transferConfig?.source_path.split('/').pop()
+        var logs = await execShell(`cd ${transferConfig?.destination_path} && rm -rf ${filename} && tar -xvf ${filename}.zip && rm ${filename}.zip`)
         ws.send(logs);
         ws.send('unzip_complete')
         ws.send('exit')

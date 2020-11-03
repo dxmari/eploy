@@ -27,8 +27,6 @@ class WebSocketServerSide {
                 })
 
                 ws.on('message', async (message: any) => {
-                    // console.log(`received: ${message}`);
-                    // ws.send(`Hello, you sent -> (${await shelljs(message)})`);
                     if (isJson(message)) {
                         ServerHelper.handleMessage(isJson(message), ws);
                     } else {

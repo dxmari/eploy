@@ -14,7 +14,7 @@ class WebSocketClient {
         this.ws = new WebSocket(`ws://${domain}`)
         
         this.ws.onopen = function (ev:any) {
-          console.log('\nPreparing Server deployment...\n');
+          console.log('\Connecting to a Server...\n');
           resolve(ev);
         }
   
