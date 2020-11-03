@@ -19,7 +19,7 @@ class ServerHelper {
         ws.send("\n1)Redirect to " + cloudConfig.application_path + "\n\n2)Update the files from git repo(" + cloudConfig.ref + ")\n\n3)Run pre launch scripts " + cloudConfig.pre_launch_script + "\n\n");
         ws.send('start_spinner');
         var logs = await execShell(`
-                cd ${cloudConfig.application_path} ${cloudConfig.ref ? ('\n\n &&  git pull ' + cloudConfig.ref.replace('/', ' ')) : ''} && ${'\n\n' + cloudConfig.pre_launch_script}
+               cd ${cloudConfig.application_path} && echo '\n-------------GIT Details------------\n' ${cloudConfig.ref ? (' &&  git pull ' + cloudConfig.ref.replace('/', ' ')) : ''} && echo '\n------------------------------------\n' && ${cloudConfig.  pre_launch_script}
         `);
         ws.send(logs)
         ws.send('stop_spinner')
