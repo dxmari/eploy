@@ -7,12 +7,14 @@ class ServerHelper {
         if (serverMessage.type === 'deploy') {
             this.runDeploy(serverMessage.config, ws)
         } else if (serverMessage.type === 'transfer') {
-            this.runFilesExtract(ws, serverMessage.config.transfer_config);
+            if(serverMessage.configType === 'staging'){
+                this.runFilesExtract(ws, serverMessage.config.transfer_config?.staging);
+            }
         }
     }
 
     runDeploy(config: EployConfig, ws: ExtWebSocket) {
-        this.navigateToAppPathAndLaunchScript(config.cloud_config, ws);
+        // this.navigateToAppPathAndLaunchScript(config.cloud_config, ws);
     }
 
     async navigateToAppPathAndLaunchScript(cloudConfig: CloudConfig, ws: ExtWebSocket) {

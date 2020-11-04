@@ -12,6 +12,11 @@ export interface TransferConfig {
     destination_path : string
 }
 
+export interface CompleteTransferConfig {
+    staging? : TransferConfig,
+    production? : TransferConfig
+}
+
 export interface CloudConfig {
     host: string,
     repo: string,
@@ -20,15 +25,21 @@ export interface CloudConfig {
     pre_launch_script: string
 }
 
+export interface CompleteCloudConfig {
+    staging? : CloudConfig,
+    production? : CloudConfig
+}
+
 export interface EployConfig {
     apps: Array<AppsConfig>
-    cloud_config: CloudConfig,
-    transfer_config? : TransferConfig
+    cloud_config: CompleteCloudConfig,
+    transfer_config? : CompleteTransferConfig
 }
 
 export interface ServerMessage {
-    type: string,
-    config: EployConfig
+    type: 'deploy' | 'transfer',
+    config: EployConfig,
+    configType? : 'staging' | 'production'
 }
 
 export type ExtWebSocket = ws & {
