@@ -1,0 +1,22 @@
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>www.eploy.service</string>
+
+        <key>WorkingDirectory</key>
+        <string>/usr/local/lib/node_modules/eploy/lib</string>
+
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/local/bin/node</string>
+            <string>start-daemon.js</string>
+        </array>
+
+        <key>RunAtLoad</key>
+        <true/>
+
+        <key>KeepAlive</key>
+        <true/>
+
+    </dict>
+</plist>

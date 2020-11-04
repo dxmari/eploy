@@ -5,7 +5,7 @@ import ServerHelper from './../helpers/server.helper'
 import { ExtWebSocket } from './../interfaces'
 import { isJson } from './../utils/common'
 
-const port: number = 8080;
+const port: number = 10101;
 
 const wss = new WebSocketServer({ noServer: true, port: port });
 

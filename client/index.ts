@@ -8,7 +8,7 @@ class WebSocketClient {
   constructor() {
     this.ws = '';
   }
-  onInit(domain: string = 'localhost:8080') {
+  onInit(domain: string = 'localhost:10101') {
     return new Promise((resolve, reject) => {
       try {
         this.ws = new WebSocket(`ws://${domain}`)
