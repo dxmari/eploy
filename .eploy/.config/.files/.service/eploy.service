@@ -1,14 +1,12 @@
 [Unit]
-Description=eployservice
+Description=Eploy Service - making your deployement easy
+Documentation=https://example.com
+After=network.target
 
 [Service]
-ExecStart=/usr/lib/node_modules/eploy/lib/start-daemon.js
+ExecStart=/usr/bin/node /usr/lib/node_modules/eploy/lib/start-daemon.js
 Restart=always
-User=nobody
-Group=nogroup
-Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/usr/lib/node_modules/eploy/lib
 
 [Install]
 WantedBy=multi-user.target
