@@ -1,4 +1,5 @@
-import shellJS from './../utils/shell'
+// import shellJS from './../utils/shell'
+import shellJS from './../utils/exec'
 
 export default async () => {
     try {
@@ -29,7 +30,7 @@ const createMacDaemonService = async () => {
 }
 
 const createUbuntuDaemonService = async () => {
-    await shellJS('sudo rm -rf /etc/systemd/system/eploy.service && sudo cp /usr/local/lib/node_modules/eploy/.eploy/.config/.files/.service/eploy.service  /etc/systemd/system/')
+    await shellJS('sudo rm -rf /etc/systemd/system/eploy.service && sudo cp /usr/lib/node_modules/eploy/.eploy/.config/.files/.service/eploy.service /etc/systemd/system/')
     setTimeout(async () => {
         await shellJS('sudo systemctl daemon-reload && sudo systemctl start eploy && sudo systemctl enable eploy');
         console.log('\n     eploy daemon service started\n');
