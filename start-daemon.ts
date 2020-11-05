@@ -1,8 +1,11 @@
-#!/usr/bin/env node
 
 import WebSocketServer from './server/index'
 
-export default async () =>{
-    await WebSocketServer.onInit();
-    console.log("Server running at a port 10101");
-}
+(async () => {
+    try {
+        await WebSocketServer.onInit();
+        console.log("Server running at a port 10101")
+    } catch (error) {
+        console.log('Connection error due to: ' + error)
+    }
+})();

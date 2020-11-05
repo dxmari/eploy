@@ -1,5 +1,6 @@
 'use strict';
 
+import { rejects } from 'assert';
 import ws, { Server as WebSocketServer } from 'ws'
 import ServerHelper from './../helpers/server.helper'
 import { ExtWebSocket } from './../interfaces'
@@ -16,7 +17,15 @@ class WebSocketServerSide {
     }
 
     connect(): Promise<ExtWebSocket> {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
+            wss.on('listening',() =>{
+                resolve()
+            });
+
+            wss.on('error',(err) =>{
+                reject(err)
+            })
+
             wss.on('connection', ((ws: ExtWebSocket) => {
                 this.socket = ws;
                 ws.isAlive = true;
@@ -38,7 +47,6 @@ class WebSocketServerSide {
                     console.log('Connection ended...');
                     ws.isAlive = false;
                 });
-                resolve(ws);
             }));
         })
     }
