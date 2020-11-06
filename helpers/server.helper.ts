@@ -30,10 +30,6 @@ class ServerHelper {
             var logs = await execShell(`
                    cd ${cloudConfig?.application_path} && echo '\n-------------GIT Details------------\n' ${cloudConfig?.ref ? (' &&  git pull ' + cloudConfig?.ref.replace('/', ' ')) : ''} && echo '\n------------------------------------\n' && ${cloudConfig?.pre_launch_script}
             `);
-            if(!logs){
-                ws.send('exit')
-                return;
-            }
             ws.send(logs)
             ws.send('stop_spinner')
             ws.send(JSON.stringify({
@@ -46,7 +42,7 @@ class ServerHelper {
             ws.send(JSON.stringify({
                 code : 1,
                 message : 'Deployment Failed due to below reason:\n',
-                error : typeof error === 'string' ? error : (error.message || '')
+                error : error
             }))
         }
     }
