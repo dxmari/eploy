@@ -58,7 +58,7 @@ export default async (args: any) => {
                     runInfoMsg(message.message);
                 } else {
                     runBeforeError(message.message);
-                    runShellError(message.message, true);
+                    runShellError(message.error, true);
                 }
             }
         });

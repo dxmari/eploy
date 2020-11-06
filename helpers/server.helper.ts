@@ -33,10 +33,10 @@ class ServerHelper {
             `);
             ws.send(logs)
             ws.send('stop_spinner')
-            ws.send({
+            ws.send(JSON.stringify({
                 code : 0,
                 message : 'Deployed Success...\n'
-            })
+            }))
             ws.send('exit')
         } catch (error) {
             ws.send(JSON.stringify({
