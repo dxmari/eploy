@@ -1,7 +1,5 @@
-import shellJS from '../utils/shell'
 import { ServerMessage, EployConfig, CloudConfig, ExtWebSocket, TransferConfig } from './../interfaces'
 import execShell from './../utils/exec'
-import shellExec from './../utils/shell_exec'
 
 class ServerHelper {
 
@@ -29,9 +27,13 @@ class ServerHelper {
         }));
         ws.send('start_spinner');
         try {
-            var logs = await shellJS(`
+            var logs = await execShell(`
                    cd ${cloudConfig?.application_path} && echo '\n-------------GIT Details------------\n' ${cloudConfig?.ref ? (' &&  git pull ' + cloudConfig?.ref.replace('/', ' ')) : ''} && echo '\n------------------------------------\n' && ${cloudConfig?.pre_launch_script}
             `);
+            if(!logs){
+                ws.send('exit')
+                return;
+            }
             ws.send(logs)
             ws.send('stop_spinner')
             ws.send(JSON.stringify({
