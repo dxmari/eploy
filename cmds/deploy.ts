@@ -1,9 +1,9 @@
-// import WebSocketServer from './../server/index'
 import WebSocketClient from './../client/index'
 
 import path from 'path';
-import { EployConfig,ServerMessage } from './../interfaces'
-
+import { EployConfig, ServerMessage } from './../interfaces'
+import { handleCloudConfig } from './../helpers/error.helper'
+import { runShellError, runBeforeError, runShellSuccess } from './../helpers/shell-messages.helper'
 import { chooseCloudType } from './../utils/prompts'
 
 export default async (args: any) => {
@@ -31,26 +31,37 @@ export default async (args: any) => {
         console.error('Deployment was aborted.');
         return;
     }
-    let cloudConfig;
-    if(cloudTypeResp.cloudType === 'staging'){
+    let cloudConfig: any;
+    if (cloudTypeResp.cloudType === 'staging') {
         cloudConfig = config.cloud_config?.staging || {}
-    }else{
+    } else {
         cloudConfig = config.cloud_config?.production || {}
+    }
+
+    let dataError = handleCloudConfig(cloudConfig);
+    if (dataError) {
+        var errorMsg = '\n  Transfering files having errors:\n';
+        await runBeforeError(errorMsg);
+        await runShellError(dataError)
+        return process.exit();
     }
 
     try {
         await WebSocketClient.onInit(cloudConfig.host);
-        WebSocketClient.onReceive((message:any) =>{
+        WebSocketClient.onReceive((message: any) => {
             console.log(message);
         });
-        var params :ServerMessage = {
-            type : 'deploy',
-            config : config,
-            configType : cloudTypeResp.cloudType
+        var params: ServerMessage = {
+            type: 'deploy',
+            config: config,
+            configType: cloudTypeResp.cloudType
         };
         WebSocketClient.sendParamsToServer(JSON.stringify(params))
     } catch (error) {
-        console.error('\ncould not connect to a host ' + cloudConfig.host + '\n')
+        console.error('\n')
+        runBeforeError('could not connect to a host ' + cloudConfig.host + ' due to below reason:\n')
+        runShellError(error, true);
+        console.error('\n')
         process.exit();
     }
 }

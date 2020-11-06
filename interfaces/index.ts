@@ -9,7 +9,8 @@ export interface TransferConfig {
     host: string,
     user : string,
     source_path : string,
-    destination_path : string
+    destination_path : string,
+    pre_transfer_script? : string
 }
 
 export interface CompleteTransferConfig {
@@ -22,7 +23,7 @@ export interface CloudConfig {
     repo: string,
     ref: string,
     application_path: string,
-    pre_launch_script: string
+    pre_launch_script?: string
 }
 
 export interface CompleteCloudConfig {

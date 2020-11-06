@@ -2,6 +2,8 @@
 
 import WebSocket from 'ws'
 import {start_spinner, stop_spinner} from './../utils/spinner'
+import { runBeforeError } from './../helpers/shell-messages.helper'
+import { isJson } from '../utils/common';
 
 class WebSocketClient {
   ws: WebSocket | any;
@@ -14,7 +16,8 @@ class WebSocketClient {
         this.ws = new WebSocket(`ws://${domain}`)
         
         this.ws.onopen = function (ev:any) {
-          console.log('\Connecting to a Server...\n');
+          // console.log('\nConnecting to a Server...\n');
+          runBeforeError('\nConnecting to a Server...\n')
           resolve(ev);
         }
   
@@ -45,6 +48,9 @@ class WebSocketClient {
   onReceive(cb?: any) {
     this.ws.onmessage =  (event :any) =>{
       var message = event.data;
+      if(isJson(event.data)){
+        message = isJson(event.data);
+      }
       if(message === 'start_spinner'){
         start_spinner('Running the scripts...\n')
       }else if(message === 'stop_spinner'){

@@ -1,14 +1,15 @@
 import { ServerMessage, EployConfig, CloudConfig, ExtWebSocket, TransferConfig } from './../interfaces'
 import execShell from './../utils/exec'
+import shellExec from './../utils/shell_exec'
 
 class ServerHelper {
 
     handleMessage(serverMessage: ServerMessage, ws: ExtWebSocket) {
         if (serverMessage.type === 'deploy') {
             if (serverMessage.configType === 'staging') {
-                this.runDeploy(ws, serverMessage.config.cloud_config?.staging)
+                this.navigateToAppPathAndLaunchScript(ws, serverMessage.config.cloud_config?.staging)
             } else {
-                this.runDeploy(ws, serverMessage.config.cloud_config?.production)
+                this.navigateToAppPathAndLaunchScript(ws, serverMessage.config.cloud_config?.production)
             }
         } else if (serverMessage.type === 'transfer') {
             if (serverMessage.configType === 'staging') {
@@ -19,20 +20,31 @@ class ServerHelper {
         }
     }
 
-    runDeploy(ws: ExtWebSocket, cloudConfig?: CloudConfig) {
-        this.navigateToAppPathAndLaunchScript(ws, cloudConfig);
-    }
-
     async navigateToAppPathAndLaunchScript(ws: ExtWebSocket, cloudConfig?: CloudConfig) {
-        ws.send("\n1)Redirect to " + cloudConfig?.application_path + "\n\n2)Update the files from git repo(" + cloudConfig?.ref + ")\n\n3)Run pre launch scripts " + cloudConfig?.pre_launch_script + "\n\n");
+
+        ws.send(JSON.stringify({
+            code : 0,
+            message : "\n1)Redirect to " + cloudConfig?.application_path + "\n\n2)Update the files from git repo(" + cloudConfig?.ref + ")\n\n3)Run pre launch scripts " + "'" + cloudConfig?.pre_launch_script + "'" + "\n\n"
+        }));
         ws.send('start_spinner');
-        var logs = await execShell(`
-               cd ${cloudConfig?.application_path} && echo '\n-------------GIT Details------------\n' ${cloudConfig?.ref ? (' &&  git pull ' + cloudConfig?.ref.replace('/', ' ')) : ''} && echo '\n------------------------------------\n' && ${cloudConfig?.pre_launch_script}
-        `);
-        ws.send(logs)
-        ws.send('stop_spinner')
-        ws.send('\nDeployed Success...\n')
-        ws.send('exit')
+        try {
+            var logs = await shellExec(`
+                   cd ${cloudConfig?.application_path} && echo '\n-------------GIT Details------------\n' ${cloudConfig?.ref ? (' &&  git pull ' + cloudConfig?.ref.replace('/', ' ')) : ''} && echo '\n------------------------------------\n' && ${cloudConfig?.pre_launch_script}
+            `);
+            ws.send(logs)
+            ws.send('stop_spinner')
+            ws.send({
+                code : 0,
+                message : 'Deployed Success...\n'
+            })
+            ws.send('exit')
+        } catch (error) {
+            ws.send(JSON.stringify({
+                code : 1,
+                message : 'Deployment Failed due to below reason:\n',
+                error : error
+            }))
+        }
     }
 
     async runFilesExtract(ws: ExtWebSocket, transferConfig?: TransferConfig) {

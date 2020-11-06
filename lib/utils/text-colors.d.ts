@@ -1,0 +1,13 @@
+export declare const BLACK = "tput setaf 0";
+export declare const RED = "tput setaf 1";
+export declare const GREEN = "tput setaf 2";
+export declare const YELLOW = "tput setaf 3";
+export declare const BLUE = "tput setaf 4";
+export declare const MAGENTA = "tput setaf 5";
+export declare const WHITE = "tput setaf 6";
+export declare const MOVE_UP = "tput cuu 1";
+export declare const CLEAR_LINE = "tput el 1";
+export declare const BOLD = "tput bold";
+export declare const UNDERLINE = "tput smul";
+export declare const RESET = "tput sgr0";
+//# sourceMappingURL=text-colors.d.ts.map

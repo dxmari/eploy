@@ -8,6 +8,7 @@ export interface TransferConfig {
     user: string;
     source_path: string;
     destination_path: string;
+    pre_transfer_script?: string;
 }
 export interface CompleteTransferConfig {
     staging?: TransferConfig;
@@ -18,7 +19,7 @@ export interface CloudConfig {
     repo: string;
     ref: string;
     application_path: string;
-    pre_launch_script: string;
+    pre_launch_script?: string;
 }
 export interface CompleteCloudConfig {
     staging?: CloudConfig;
