@@ -39,10 +39,11 @@ class ServerHelper {
             }))
             ws.send('exit')
         } catch (error) {
+            ws.send('stop_spinner')
             ws.send(JSON.stringify({
                 code : 1,
                 message : 'Deployment Failed due to below reason:\n',
-                error : error
+                error : typeof error === 'string' ? error : (error.message || '')
             }))
         }
     }

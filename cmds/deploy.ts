@@ -58,7 +58,7 @@ export default async (args: any) => {
                     runInfoMsg(message.message);
                 } else {
                     runBeforeError(message.message);
-                    runShellError(message.error, true);
+                    runShellError(typeof message.error === 'string' ? message.error : (message.error.message || ''), true);
                 }
             }
         });
@@ -71,7 +71,7 @@ export default async (args: any) => {
     } catch (error) {
         console.error('\n')
         runBeforeError('could not connect to a host ' + cloudConfig.host + ' due to below reason:\n')
-        runShellError(error, true);
+        runShellError(typeof error === 'string' ? error : (error.message || ''), true);
         console.error('\n')
         process.exit();
     }
