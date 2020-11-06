@@ -3,7 +3,7 @@ import WebSocketClient from './../client/index'
 import path from 'path';
 import { EployConfig, ServerMessage } from './../interfaces'
 import { handleCloudConfig } from './../helpers/error.helper'
-import { runShellError, runBeforeError, runShellSuccess } from './../helpers/shell-messages.helper'
+import { runShellError, runBeforeError, runShellSuccess, runInfoMsg } from './../helpers/shell-messages.helper'
 import { chooseCloudType } from './../utils/prompts'
 
 export default async (args: any) => {
@@ -49,7 +49,18 @@ export default async (args: any) => {
     try {
         await WebSocketClient.onInit(cloudConfig.host);
         WebSocketClient.onReceive((message: any) => {
-            console.log(message);
+            if (typeof message === 'string') {
+                console.log(message);
+            } else {
+                if (message.code === 0) {
+                    runShellSuccess(message.message, true);
+                } else if (message.code === 2) {
+                    runInfoMsg(message.message);
+                } else {
+                    runBeforeError(message.message);
+                    runShellError(message.message, true);
+                }
+            }
         });
         var params: ServerMessage = {
             type: 'deploy',
