@@ -22,8 +22,8 @@ class ServerHelper {
     async navigateToAppPathAndLaunchScript(ws: ExtWebSocket, cloudConfig?: CloudConfig) {
 
         ws.send(JSON.stringify({
-            code : 2,
-            message : "1)Redirect to " + cloudConfig?.application_path + "\n\n2)Update the files from git repo(" + cloudConfig?.ref + ")\n\n3)Run pre launch scripts " + "'" + cloudConfig?.pre_launch_script + "'" + "\n\n"
+            code: 2,
+            message: "1)Redirect to " + cloudConfig?.application_path + "\n\n2)Update the files from git repo(" + cloudConfig?.ref + ")\n\n3)Run pre launch scripts " + "'" + cloudConfig?.pre_launch_script + "'" + "\n\n"
         }));
         ws.send('start_spinner');
         try {
@@ -33,26 +33,34 @@ class ServerHelper {
             ws.send(logs)
             ws.send('stop_spinner')
             ws.send(JSON.stringify({
-                code : 0,
-                message : 'Deployed Success...\n'
+                code: 0,
+                message: 'Deployed Success...\n'
             }))
             ws.send('exit')
         } catch (error) {
             ws.send('stop_spinner')
             ws.send(JSON.stringify({
-                code : 1,
-                message : 'Deployment Failed due to below reason:\n',
-                error : error
+                code: 1,
+                message: 'Deployment failed due to below reason:\n',
+                error: error
             }))
         }
     }
 
     async runFilesExtract(ws: ExtWebSocket, transferConfig?: TransferConfig) {
         var filename = transferConfig?.source_path.split('/').pop()
-        var logs = await execShell(`cd ${transferConfig?.destination_path} && rm -rf ${filename} && tar -xvf ${filename}.zip && rm ${filename}.zip`)
-        ws.send(logs);
-        ws.send('unzip_complete')
-        ws.send('exit')
+        try {
+            var logs = await execShell(`cd ${transferConfig?.destination_path} && rm -rf ${filename} && tar -xvf ${filename}.zip && rm ${filename}.zip`)
+            ws.send(logs);
+            ws.send('unzip_complete')
+            ws.send('exit')
+        } catch (error) {
+            ws.send(JSON.stringify({
+                code: 1,
+                message: 'Transfering files failed due to below reason:\n',
+                error: error
+            }))
+        }
     }
 
 }

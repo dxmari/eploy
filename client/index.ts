@@ -1,5 +1,3 @@
-'use strict';
-
 import WebSocket from 'ws'
 import {start_spinner, stop_spinner} from './../utils/spinner'
 import { runBeforeError } from './../helpers/shell-messages.helper'
@@ -16,7 +14,6 @@ class WebSocketClient {
         this.ws = new WebSocket(`ws://${domain}`)
         
         this.ws.onopen = function (ev:any) {
-          // console.log('\nConnecting to a Server...\n');
           runBeforeError('\nConnecting to a Server...\n')
           resolve(ev);
         }

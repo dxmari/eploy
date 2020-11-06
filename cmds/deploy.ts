@@ -1,6 +1,6 @@
-import WebSocketClient from './../client/index'
-
 import path from 'path';
+
+import WebSocketClient from './../client/index'
 import { EployConfig, ServerMessage } from './../interfaces'
 import { handleCloudConfig } from './../helpers/error.helper'
 import { runShellError, runBeforeError, runShellSuccess, runInfoMsg } from './../helpers/shell-messages.helper'
@@ -53,12 +53,14 @@ export default async (args: any) => {
                 console.log(message);
             } else {
                 if (message.code === 0) {
+                    console.log('\n')
                     runShellSuccess(message.message, true);
                 } else if (message.code === 2) {
                     runInfoMsg(message.message);
                 } else {
                     runBeforeError(message.message);
                     runShellError(typeof message.error === 'string' ? message.error : (message.error.message || ''), true);
+                    process.exit();
                 }
             }
         });

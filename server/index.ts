@@ -1,7 +1,4 @@
-'use strict';
-
-import { rejects } from 'assert';
-import ws, { Server as WebSocketServer } from 'ws'
+import { Server as WebSocketServer } from 'ws'
 import ServerHelper from './../helpers/server.helper'
 import { ExtWebSocket } from './../interfaces'
 import { isJson } from './../utils/common'
