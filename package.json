@@ -1,7 +1,7 @@
 {
   "name": "eploy",
   "version": "1.0.0",
-  "description": "",
+  "description": "Easy deployment for any programming languages and also transfer the files to a server instantly with a single command",
   "main": "lib/index.js",
   "types": "lib",
   "dependencies": {
@@ -27,8 +27,18 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "postinstall": "node lib/post-install.js",
+    "postuninstall": "node lib/post-uninstall.js"
+  },
+  "bugs": { 
+    "email": "dxmari007@gmail.com",
+    "url": "https://github.com/dxmari/eploy/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dxmari/eploy"
   },
   "author": "Mariselvam",
-  "license": "ISC"
+  "license": "MIT"
 }

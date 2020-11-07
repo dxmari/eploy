@@ -39,7 +39,7 @@ export const start = async (args: any) => {
                 console.log('\n     eploy daemon service started\n');
             } catch (error) {
                 console.log(error);
-                console.log(await shellJS(`echo "${symWarning} $(${YELLOW})Make sure run the command $(${BOLD})$(${BLUE})'eploy start daemon'$(${RESET})$(${YELLOW}) before execute a $(${BOLD})$(${BLUE})'eploy restart'$(${RESET})"`))
+                console.log(await shellJS(`echo "${symWarning} $(${YELLOW})Make sure run the command $(${BOLD})$(${BLUE})'eploy start daemon'$(${RESET})$(${YELLOW}) before execute a $(${BOLD})$(${BLUE})'eploy start'$(${RESET})"`))
                 process.exit()
             }
         }
@@ -159,23 +159,28 @@ export const stop = async () => {
 
 export const deleteService = async () => {
     let response = await confirmDeleteService()
-    console.log(response);
     if (response.confirm_delete) {
-        let osDetail: OSDetails = await getOSName()
-        if (!osDetail) return;
-        try {
-            if (osDetail === 'mac') {
-                var servicePath = '/Library/LaunchDaemons/www.eploy.service.plist'
-                await shellJS(`launchctl unload ${servicePath} && sudo rm -rf /Library/LaunchDaemons/www.eploy.service.plist`);
-                console.log('\n     eploy daemon service deleted permanently\n');
-            } else if (osDetail === 'ubuntu-linux') {
-                await shellJS(`sudo systemctl daemon-reload && sudo systemctl stop eploy && sudo rm -rf /etc/systemd/system/eploy.service`);
-                console.log('\n     eploy daemon service deleted permanently\n');
-            } else {
-                process.exit()
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        confirmDelete();
     }
 }
+
+const confirmDelete = async () => {
+    let osDetail: OSDetails = await getOSName()
+    if (!osDetail) return;
+    try {
+        if (osDetail === 'mac') {
+            var servicePath = '/Library/LaunchDaemons/www.eploy.service.plist'
+            await shellJS(`launchctl unload ${servicePath} && sudo rm -rf /Library/LaunchDaemons/www.eploy.service.plist`);
+            console.log('\n     eploy daemon service deleted permanently\n');
+        } else if (osDetail === 'ubuntu-linux') {
+            await shellJS(`sudo systemctl daemon-reload && sudo systemctl stop eploy && sudo rm -rf /etc/systemd/system/eploy.service`);
+            console.log('\n     eploy daemon service deleted permanently\n');
+        } else {
+            process.exit()
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { confirmDelete };
