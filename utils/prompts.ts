@@ -45,3 +45,12 @@ export const chooseCloudType = async (type: number) => {
     let response = await prompts(cloudChoices);
     return response;
 }
+
+export const confirmDeleteService = async () => {
+    let response = await prompts({
+        type : 'confirm',
+        name : 'confirm_delete',
+        message : 'Are you sure you want to delete the eploy service permanently'
+    });
+    return response;
+}

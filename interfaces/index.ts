@@ -46,3 +46,5 @@ export interface ServerMessage {
 export type ExtWebSocket = ws & {
     isAlive: boolean
 }
+
+export type OSDetails = 'mac' | 'ubuntu-linux' | false

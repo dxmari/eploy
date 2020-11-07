@@ -1,8 +1,8 @@
 import deploy from './deploy'
 import help from './help'
-import start from './start'
+import { run, start, restart, stop, deleteService } from './manage-server'
 import transfer from './transfer'
 import version from './version'
 export {
-    deploy, help, version, start, transfer
+    help, version, run, start, restart, stop, deleteService, deploy, transfer
 }

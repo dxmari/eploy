@@ -1,4 +1,4 @@
-import { RED, RESET, GREEN, YELLOW, MAGENTA } from './text-colors'
+import { RED, GREEN, YELLOW, MAGENTA } from './text-colors'
 
 export const symInfo = '$(' + MAGENTA + ')' + 'ℹ ' //+ '$(' + RESET + ') '
 export const symSuccess = '$(' + GREEN + ')' + '✔ ' //+ '$(' + RESET + ') '

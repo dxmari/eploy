@@ -1,7 +1,7 @@
 import minimist from 'minimist'
 
 import error from './utils/error'
-import { deploy, version, help, start, transfer } from './cmds'
+import { deploy, version, help, transfer, run, start, restart, stop, deleteService, } from './cmds'
 
 const integrateCmds = () => {
     const args = minimist(process.argv.slice(2))
@@ -25,12 +25,28 @@ const integrateCmds = () => {
             help(args)
             break
 
-        case 'deploy':
-            deploy(args)
+        case 'run':
+            run()
             break
 
         case 'start':
-            start()
+            start(args)
+            break
+
+        case 'restart':
+            restart()
+            break
+
+        case 'stop':
+            stop()
+            break
+
+        case 'delete':
+            deleteService()
+            break
+
+        case 'deploy':
+            deploy(args)
             break
 
         case 'transfer':

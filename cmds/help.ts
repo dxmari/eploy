@@ -1,11 +1,20 @@
 import shellJS from "../utils/shell"
-import { BLUE, BOLD, MAGENTA, RESET, YELLOW } from "../utils/text-colors"
+import { BLUE, BOLD, GREEN, MAGENTA, RESET, YELLOW } from "../utils/text-colors"
 
 const menus: any = {
   main: `
     $(${YELLOW})$(${BOLD})eploy [command] <options>$(${RESET})
       
+      $(${GREEN})$(${BOLD})#FOR SERVER
+
+      $(${BLUE})$(${BOLD})run$(${MAGENTA})$(${BOLD}) ............... to run the eploy service
       $(${BLUE})$(${BOLD})start$(${MAGENTA})$(${BOLD}) ............. to start the eploy service in background process
+      $(${BLUE})$(${BOLD})restart$(${MAGENTA})$(${BOLD}) ........... to restart the eploy service in background process
+      $(${BLUE})$(${BOLD})stop$(${MAGENTA})$(${BOLD}) .............. to stop the eploy service in background process
+      $(${BLUE})$(${BOLD})delete$(${MAGENTA})$(${BOLD}) ............ to delete the eploy service in background process
+
+
+      $(${GREEN})$(${BOLD})#FOR CLIENT
 
       $(${BLUE})$(${BOLD})deploy$(${MAGENTA}) ............ to run the server deployment for staging or production
       $(${BLUE})$(${BOLD})transfer$(${MAGENTA}) .......... to transfer the files to the staging or production server
@@ -21,10 +30,5 @@ export default async (args: any) => {
     ? args._[1]
     : args._[0]
 
-  // console.log(menus[subCmd] || menus.main)
-  try {
-    await shellJS('echo "' + (menus[subCmd] || menus.main) + '"');
-  } catch (error) {
-    
-  }
+  await shellJS('echo "' + (menus[subCmd] || menus.main) + '"');
 }

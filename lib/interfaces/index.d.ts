@@ -38,4 +38,5 @@ export interface ServerMessage {
 export declare type ExtWebSocket = ws & {
     isAlive: boolean;
 };
+export declare type OSDetails = 'mac' | 'ubuntu-linux' | false;
 //# sourceMappingURL=index.d.ts.map
