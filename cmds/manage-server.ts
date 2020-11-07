@@ -34,8 +34,14 @@ export const start = async (args: any) => {
         if (args._[1] === 'daemon') {
             createUbuntuDaemonService()
         } else {
-            await shellJS(`sudo systemctl daemon-reload && sudo systemctl start eploy`);
-            console.log('\n     eploy daemon service started\n');
+            try {
+                await shellJS(`sudo systemctl daemon-reload && sudo systemctl start eploy`);
+                console.log('\n     eploy daemon service started\n');
+            } catch (error) {
+                console.log(error);
+                console.log(await shellJS(`echo "${symWarning} $(${YELLOW})Make sure run the command $(${BOLD})$(${BLUE})'eploy start daemon'$(${RESET})$(${YELLOW}) before execute a $(${BOLD})$(${BLUE})'eploy restart'$(${RESET})"`))
+                process.exit()
+            }
         }
     } else {
         process.exit()
@@ -99,8 +105,14 @@ export const restart = async () => {
                 process.exit()
             }
         } else if (osDetail === 'ubuntu-linux') {
-            await shellJS(`sudo systemctl daemon-reload && sudo systemctl restart eploy`);
-            console.log('\n     eploy daemon service restarted\n');
+            try {
+                await shellJS(`sudo systemctl daemon-reload && sudo systemctl restart eploy`);
+                console.log('\n     eploy daemon service restarted\n');
+            } catch (error) {
+                console.log(error);
+                console.log(await shellJS(`echo "${symWarning} $(${YELLOW})Make sure run the command $(${BOLD})$(${BLUE})'eploy start daemon'$(${RESET})$(${YELLOW}) before execute a $(${BOLD})$(${BLUE})'eploy restart'$(${RESET})"`))
+                process.exit()
+            }
         } else {
             process.exit()
         }
@@ -127,8 +139,14 @@ export const stop = async () => {
                 process.exit()
             }
         } else if (osDetail === 'ubuntu-linux') {
-            await shellJS(`sudo systemctl daemon-reload && sudo systemctl stop eploy`);
-            console.log('\n     eploy daemon service stopped\n');
+            try {
+                await shellJS(`sudo systemctl daemon-reload && sudo systemctl stop eploy`);
+                console.log('\n     eploy daemon service stopped\n');
+            } catch (error) {
+                console.log(error);
+                console.log(await shellJS(`echo "${symWarning} $(${YELLOW})Make sure run the command $(${BOLD})$(${BLUE})'eploy start daemon'$(${RESET})$(${YELLOW}) before execute a $(${BOLD})$(${BLUE})'eploy stop'$(${RESET})"`))
+                process.exit()
+            }
         } else {
             process.exit()
         }
