@@ -126,6 +126,17 @@ $ eploy2 transfer
 Within a single command & select your environment, your files will transfer quickly to the specific path in a server instantly. 
 It will shows the server logs also in your terminal.
 
+### Further information about eploy2
+
+### Eploy Help
+
+```sh
+$ eploy2 -h
+
+```
+
+![Eploy Help](https://github.com/dxmari/eploy/blob/master/eploy-help.png)
+
 Thanks in advance and we hope that you like eploy2!! 🙏 🙏 🙏 🙏 🙏 
 
 ## CHANGELOG

@@ -1,6 +1,6 @@
 {
   "name": "eploy2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Easy deployment for any programming languages and also transfer the files to a server instantly with a single command",
   "main": "lib/index.js",
   "types": "lib",
@@ -23,7 +23,7 @@
     "typescript": "^4.0.3"
   },
   "bin": {
-    "eploy": "bin/eploy"
+    "eploy2": "bin/eploy2"
   },
   "keywords": [
     "eploy",
@@ -65,7 +65,7 @@
     "postinstall": "node lib/post-install.js",
     "postuninstall": "node lib/post-uninstall.js"
   },
-  "bugs": { 
+  "bugs": {
     "email": "dxmari007@gmail.com",
     "url": "https://github.com/dxmari/eploy/issues"
   },
