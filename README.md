@@ -1,5 +1,6 @@
 # Eploy2 makes your deployment easy, forget the worries about the deployment because its all about just a single command.
 ## Eploy2 makes your files transferring to a server easy at a single command.
+
 Eploy2 supports all types of **Server side programming languages** like Javascript, Typescript, Node, Ruby On Rails, Python, PHP, C#, .Net  etc ..,
 
 ## Getting started
@@ -125,3 +126,12 @@ $ eploy2 transfer
 Within a single command & select your environment, your files will transfer quickly to the specific path in a server instantly. 
 It will shows the server logs also in your terminal.
 
+Thanks in advance and we hope that you like eploy2!! 🙏 🙏 🙏 🙏 🙏 
+
+## CHANGELOG
+
+[CHANGELOG](https://github.com/dxmari/eploy/blob/master/CHANGELOG.md)
+
+## License
+
+[MIT](LICENSE)
