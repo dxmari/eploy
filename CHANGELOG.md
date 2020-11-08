@@ -8,6 +8,6 @@
 - changes: Help command changes
 - core : change eploy to eploy2 (global name)
 
-## 1.0.2
+## 1.0.3
 
 - changes: README.MD in eploy help image change
