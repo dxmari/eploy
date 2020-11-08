@@ -87,3 +87,41 @@ module.exports = {
 }
 ```
 
+The above file explains the configuration of eploy service. In cloud_config or transfer_config must having 'staging' or 'production' attribute. 
+
+
+### Available Client Side Commands
+
+#### Deployment
+
+Deploy your application is as easy as:
+
+```sh
+$ eploy2 deploy
+
+#output of above command
+? Choose the deploy type › - Use arrow-keys. Return to submit.
+❯   Staging
+    Production
+```
+
+Within a single command & select your environment, your application will deploy smoothly in a server instantly. 
+It will shows the server logs also in your terminal.
+
+
+#### Files Transfer to server
+
+Transfer your files to the server is as easy as:
+
+```sh
+$ eploy2 transfer
+
+#output of above command
+? Choose the transfer type › - Use arrow-keys. Return to submit.
+❯   Staging
+    Production
+```
+
+Within a single command & select your environment, your files will transfer quickly to the specific path in a server instantly. 
+It will shows the server logs also in your terminal.
+
