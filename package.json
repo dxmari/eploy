@@ -1,6 +1,6 @@
 {
   "name": "eploy2",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Easy deployment for any programming languages and also transfer the files to a server instantly with a single command",
   "main": "lib/index.js",
   "types": "lib",

@@ -11,3 +11,7 @@
 ## 1.0.3
 
 - changes: README.MD in eploy help image change
+
+## 1.0.4
+
+- changes: README.MD
