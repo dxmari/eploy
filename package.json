@@ -1,6 +1,6 @@
 {
-  "name": "eploy",
-  "version": "1.0.0",
+  "name": "eploy2",
+  "version": "1.0.1",
   "description": "Easy deployment for any programming languages and also transfer the files to a server instantly with a single command",
   "main": "lib/index.js",
   "types": "lib",
@@ -42,6 +42,8 @@
     "websockets",
     "sockets",
     "easy deployment",
+    "file transfer",
+    "files transfer",
     "transfer",
     "e-transfer",
     "easy-transfer",
@@ -50,6 +52,12 @@
     "server transer",
     "client transfer",
     "background services",
+    "node",
+    "nodejs",
+    "javascript",
+    "typescript",
+    "production",
+    "staging"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
