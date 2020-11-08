@@ -1,5 +1,8 @@
-# [Eploy2](https://www.npmjs.com/package/eploy2) makes your deployment easy, forget the worries about the deployment because its all about just a single command.
-## [Eploy2](https://www.npmjs.com/package/eploy2) makes your files transferring to a server easy at a single command.
+## (**E**)asy De(**ploy**)ment
+
+[Eploy2](https://www.npmjs.com/package/eploy2) makes your **deployment easy**, forget the worries about the deployment because its all about just a single command.
+
+[Eploy2](https://www.npmjs.com/package/eploy2) makes your files **transferring** to a server easy at a single command.
 
 Eploy2 supports all types of **Server side programming languages** like Javascript, Typescript, Node, Ruby On Rails, Python, PHP, C#, .Net  etc ..,
 
