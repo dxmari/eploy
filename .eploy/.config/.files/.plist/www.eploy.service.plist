@@ -4,7 +4,7 @@
         <string>www.eploy.service</string>
 
         <key>WorkingDirectory</key>
-        <string>/usr/local/lib/node_modules/eploy/lib</string>
+        <string>/usr/local/lib/node_modules/eploy2/lib</string>
 
         <key>ProgramArguments</key>
         <array>

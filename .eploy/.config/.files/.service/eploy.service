@@ -4,7 +4,7 @@ Documentation=https://example.com
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/node /usr/lib/node_modules/eploy/lib/start-daemon.js
+ExecStart=/usr/bin/node /usr/lib/node_modules/eploy2/lib/start-daemon.js
 Restart=always
 Environment=NODE_ENV=production
 
