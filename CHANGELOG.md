@@ -15,3 +15,7 @@
 ## 1.0.4
 
 - changes: README.MD
+
+## 1.0.4
+
+- core: change eploy to eploy2 in the config files
