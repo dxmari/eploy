@@ -1,0 +1,25 @@
+{
+    "is_daemon_started": true,
+    "starts_at": "-",
+    "last_restarts_at": "2020-11-25T11:15:20.344Z",
+    "application_list": [
+        {
+            "pid": 1,
+            "app_name": "cm-v4",
+            "application_path" : "",
+            "success_count": 121,
+            "fail_count": 249,
+            "last_run_status": "success",
+            "last_run_at": "2020-11-18T16:03:11.038Z"
+        },
+        {
+            "pid": 2,
+            "app_name": "eploy",
+            "success_count": 1111,
+            "application_path" : "",
+            "fail_count": 2249,
+            "last_run_status": "failure",
+            "last_run_at": "2019-10-18T16:03:11.038Z"
+        }
+    ]
+}

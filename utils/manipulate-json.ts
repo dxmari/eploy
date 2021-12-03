@@ -5,6 +5,7 @@ export default class ManipulateJSON {
     public static isModified: boolean = false;
     public static json: any = null;
     public static filepath: any = "";
+    public static orginalFilepath: any = "";
     constructor() { }
 
     static path(filepath: string) {
@@ -15,7 +16,8 @@ export default class ManipulateJSON {
                 this.filepath = null;
                 return;
             }
-            this.filepath = path.resolve(filepath);
+            this.orginalFilepath = filepath;
+            this.filepath = path.resolve(__dirname, '../../', filepath);
             this.json = fs.readFileSync(this.filepath, {
                 encoding: 'utf8'
             });
@@ -29,7 +31,7 @@ export default class ManipulateJSON {
     }
     static get(param?: string | any) {
         if (!param) return this.json;
-        
+
         if (typeof param === 'string') {
             if (this.json) {
                 return this.json[param];
@@ -150,10 +152,13 @@ export default class ManipulateJSON {
         return this;
     }
     static save() {
-        console.log(this.json)
         if (this.json) {
             if (this.isModified) {
                 fs.writeFileSync(this.filepath, JSON.stringify(this.json), {
+                    encoding: 'utf8'
+                });
+                var tempFilepath = path.resolve(__dirname, '../../lib/', this.orginalFilepath);
+                fs.writeFileSync(tempFilepath, JSON.stringify(this.json), {
                     encoding: 'utf8'
                 });
             }

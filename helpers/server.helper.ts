@@ -1,5 +1,7 @@
+import ManipulateJSON from '../utils/manipulate-json';
 import { ServerMessage, EployConfig, CloudConfig, ExtWebSocket, TransferConfig } from './../interfaces'
 import execShell from './../utils/exec'
+import config from './../.eploy/config.json'
 
 class ServerHelper {
 
@@ -26,11 +28,20 @@ class ServerHelper {
             message: "1)Redirect to " + cloudConfig?.application_path + "\n\n2)Update the files from git repo(" + cloudConfig?.ref + ")\n\n3)Run pre launch scripts " + "'" + cloudConfig?.pre_launch_script + "'" + "\n\n"
         }));
         ws.send('start_spinner');
+        
         try {
-            var logs = await execShell(`
-                   cd ${cloudConfig?.application_path} && echo '\n-------------GIT Details------------\n' ${cloudConfig?.ref ? (' &&  git pull ' + cloudConfig?.ref.replace('/', ' ')) : ''} && echo '\n------------------------------------\n' && ${cloudConfig?.pre_launch_script}
-            `);
-            ws.send(logs)
+            let gitCmd = `cd ${cloudConfig?.application_path} && echo '\n-------------GIT Details------------\n ' ${cloudConfig?.ref ? (' &&  git pull ' + cloudConfig?.ref.replace('/', ' ')) : ''} && echo '\n------------------------------------\n'`
+            var gitLogs = await execShell(gitCmd);
+
+            console.log('gitCmd', gitCmd)
+            ws.send(gitLogs)
+
+            var scriptCmd = `cd ${cloudConfig?.application_path} && ${cloudConfig?.pre_launch_script}`;
+            var scriptLogs = await execShell(scriptCmd);
+
+            console.log('scriptCmd', scriptCmd)
+
+            ws.send(scriptLogs)
             ws.send('stop_spinner')
             ws.send(JSON.stringify({
                 code: 0,

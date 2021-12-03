@@ -1,8 +1,14 @@
+import path from 'path'
+
 import { OSDetails } from '../interfaces';
 import shellJS from '../utils/exec'
 import { confirmDeleteService } from '../utils/prompts';
 import { BLUE, BOLD, RESET, YELLOW } from '../utils/text-colors';
 import { symWarning } from '../utils/symbols';
+import { listApplications, serviceStatus } from './../utils/table'
+import { runBeforeError, runShellError } from '../helpers/shell-messages.helper';
+import config from './../.eploy/config.json'
+import ManipulateJSON from '../utils/manipulate-json';
 
 /*.................EPLOY SERVICE START COMMANDS STARTS.................*/
 
@@ -74,6 +80,13 @@ const createMacDaemonService = async () => {
     setTimeout(async () => {
         await shellJS('launchctl load /Library/LaunchDaemons/www.eploy.service.plist && launchctl start www.eploy.service')
         console.log('\n     eploy daemon service started\n');
+        if (!config.is_daemon_started) {
+            ManipulateJSON
+                .path('./.eploy/config.json')
+                ?.set('is_daemon_started', true)
+                ?.set('starts_at', new Date().toJSON())
+                .save();
+        }
         process.exit();
     }, 1000);
 }
@@ -83,6 +96,12 @@ const createUbuntuDaemonService = async () => {
     setTimeout(async () => {
         await shellJS('sudo systemctl daemon-reload && sudo systemctl start eploy && sudo systemctl enable eploy');
         console.log('\n     eploy daemon service started\n');
+        if (!config.is_daemon_started) {
+            ManipulateJSON
+                .path('./.eploy/config.json')
+                ?.set('is_daemon_started', true)
+                .save();
+        }
         process.exit();
     }, 1000);
 }
@@ -99,6 +118,10 @@ export const restart = async () => {
             let logs: any = await shellJS(`launchctl unload ${servicePath} && launchctl load ${servicePath}`);
             if (logs.indexOf('No such file or directory') === -1) {
                 console.log('\n     eploy daemon service restarted\n');
+                ManipulateJSON
+                    .path('./.eploy/config.json')
+                    ?.set('last_restarts_at', new Date().toJSON())
+                    .save();
             } else {
                 console.log(`${servicePath}: No such file or directory`)
                 console.log(await shellJS(`echo "${symWarning} $(${YELLOW})Make sure run the command $(${BOLD})$(${BLUE})'eploy start daemon'$(${RESET})$(${YELLOW}) before execute a $(${BOLD})$(${BLUE})'eploy restart'$(${RESET})"`))
@@ -152,6 +175,49 @@ export const stop = async () => {
         }
     } catch (error) {
         console.log(error);
+    }
+}
+
+/*.................EPLOY SERVICE STATUS COMMANDS STARTS.................*/
+
+export const status = async (args: any) => {
+    if (!config.is_daemon_started) {
+        console.log(await shellJS(`echo "${symWarning} $(${YELLOW})Make sure run the command $(${BOLD})$(${BLUE})'eploy start daemon'$(${RESET})$(${YELLOW}) before execute a $(${BOLD})$(${BLUE})'eploy status'$(${RESET})"`))
+        return;
+    }
+    let statusArr = ['Eploy Service', '/Library/LaunchDaemons/www.eploy.service.plist', config.starts_at, config.last_restarts_at]
+    try {
+        let osName = await getOSName();
+        if (osName === 'mac') {
+            let fullStatus: any = await shellJS('launchctl list www.eploy.service')
+            fullStatus = fullStatus.replace(/;/g, ',').replace(/=/g, ':').replace('(', '[').replace('),', ']').replace(/\s+/g, '').replace(/(^[,\s]+)|([,\s]+$)/g, '')
+            fullStatus = eval('(' + fullStatus + ')')
+            statusArr.push('🟢 running');
+            const out = serviceStatus([fullStatus.PID].concat(statusArr));
+            console.log(out);
+        } else if (osName === 'ubuntu-linux') {
+
+        }
+    } catch (error) {
+        statusArr.push('🔴 stopped');
+        const out = serviceStatus(['-'].concat(statusArr));
+        console.log(out);
+    }
+}
+
+/*.................EPLOY SERVICE LIST COMMANDS STARTS.................*/
+
+export const list = async (args: any) => {
+    try {
+        let osName = await getOSName();
+        if (osName === 'mac') {
+            const out = listApplications(config.application_list);
+            console.log(out);
+        } else if (osName === 'ubuntu-linux') {
+
+        }
+    } catch (error) {
+        runShellError(error, true)
     }
 }
 

@@ -1,7 +1,7 @@
 import minimist from 'minimist'
 
 import error from './utils/error'
-import { deploy, version, help, transfer, run, start, restart, stop, deleteService, } from './cmds'
+import { deploy, version, help, transfer, run, start, restart, stop, list, status, deleteService } from './cmds'
 
 const integrateCmds = () => {
     const args = minimist(process.argv.slice(2))
@@ -29,8 +29,17 @@ const integrateCmds = () => {
             run()
             break
 
+
         case 'start':
             start(args)
+            break
+
+        case 'list':
+            list(args);
+            break
+
+        case 'status':
+            status(args);
             break
 
         case 'restart':
@@ -57,6 +66,7 @@ const integrateCmds = () => {
             error(`"${cmd}" is not a valid command!`, true)
             break
     }
+
 }
 
 export const init = async () => {
